@@ -8,5 +8,6 @@ export interface Category {
     __v: number
     subcategories:Category[]
     isSubCategories:Boolean
+    webiconimageurl:string
   }
   
