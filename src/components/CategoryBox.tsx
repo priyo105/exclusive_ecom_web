@@ -20,7 +20,6 @@ export default function CategoryBox({ category }: { category: Category }) {
                 '&:hover': { transform: 'scale(1.1)' }
             }}
         >
-            {/* Background Image */}
             <Box
                 sx={{
                     position: 'absolute',
@@ -31,7 +30,7 @@ export default function CategoryBox({ category }: { category: Category }) {
                     backgroundImage: `url(${imageUrls}/uploads/${category.webiconimageurl})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
-                    filter: 'brightness(0.9)', // darken for text readability
+                    filter: 'brightness(0.9)', 
                     zIndex: 0,
 
                 }}
