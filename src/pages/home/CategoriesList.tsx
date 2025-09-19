@@ -2,7 +2,7 @@
 import CategoryBox from '../../components/CategoryBox';
 import MobileCategoryBox from '../../components/MobileCategoryBox';
 import { getCategories } from '../../apis/home';
-import { Category } from '@/types/Category';
+import { Category } from '../../types/Category';
 import React, { useEffect, useState } from 'react'
 
 export default function CategoriesList() {
@@ -13,10 +13,19 @@ export default function CategoriesList() {
     }, []);
 
     return (
-        <div className="w-full flex flex-col md:items-center">
-            <h2 className="text-md md:text-2xl ml-5 md:ml-0 font-bold md:text-center mt-20">
-                Shop by Categories
-            </h2>
+
+        <div className="w-full flex flex-col items-center mb-10">
+            {/* Header row for mobile */}
+            <div className="flex md:hidden items-center justify-between mt-20 w-full px-4">
+                <h2 className="text-md font-bold">Shop by Categories</h2>
+                <a href="#" className="text-black text-sm font-bold">See all</a>
+            </div>
+
+            {/* Header row for desktop */}
+            <div className="hidden md:flex items-center justify-between w-full max-w-7xl px-4 mt-20">
+                <h2 className="text-2xl font-bold">Shop by Categories</h2>
+                <a href="#" className="text-black font-bold ">See all</a>
+            </div>
 
             {/* Desktop grid */}
             <div
@@ -36,7 +45,6 @@ export default function CategoriesList() {
                     ) : null
                 )}
             </div>
-
             {/* Mobile horizontal scroll */}
             <div
                 className="flex md:hidden overflow-x-auto space-x-4 mt-10 w-full px-4 no-scrollbar"

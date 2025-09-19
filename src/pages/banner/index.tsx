@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import { getBanners } from "../../apis/home";
 import { Banner } from "../../types/Banner";
-import { imageUrls } from "@/apis/endpoints";
+import { imageUrls } from "../../apis/endpoints";
 
 export default function BannerPage() {
   const [banners, setBanners] = useState<Banner[] | null>(null);
