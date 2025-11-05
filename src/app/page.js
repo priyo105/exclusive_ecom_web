@@ -1,13 +1,15 @@
-import BannerPage from '../pages/banner/index';
+"use client";
+
+import BannerPage from './banner/index';
 import Header from '../components/Header';
-import CategoriesList from '../pages/home/CategoriesList';
-import TopRatedProducts from '../pages/home/TopRatedProducts';
-import RenderDynamicSection from '../pages/home/RenderDynamicSection';
+import CategoriesList from './home/CategoriesList';
+import TopRatedProducts from './home/TopRatedProducts';
+import RenderDynamicSection from './home/RenderDynamicSection';
 import Footer from '../components/Footer';
-import RenderVendors from '../pages/home/RenderVendors';
+import RenderVendors from './home/RenderVendors';
 export default function Home() {
   return (
-    <div >
+    <div className='bg-white' >
          <Header />
           <BannerPage />
           <CategoriesList />

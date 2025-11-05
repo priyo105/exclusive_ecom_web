@@ -1,3 +1,5 @@
+"use client"; 
+
 import { imageUrls } from '../apis/endpoints'
 import { Category } from '../types/Category'
 import { Box, Card, CardContent, Typography } from '@mui/material'
