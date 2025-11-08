@@ -4,9 +4,15 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion"
+} from "../../../../components/ui/accordion"
+import type { ProductInfo } from '../../../../types/ProductInfo'
+import parse from 'html-react-parser';
 
-export default function ProductInfo() {
+export default function ProductInfo({ productInfo }: { productInfo?: ProductInfo | null }) {
+  // if productInfo isn't loaded yet, render nothing (or replace with a loader if desired)
+  if (!productInfo) return null;
+
+  console.log("ProductInfo:", productInfo);
   return (
     <Accordion
       type="single"
@@ -15,46 +21,34 @@ export default function ProductInfo() {
       defaultValue="item-1"
     >
       <AccordionItem value="item-1">
-        <AccordionTrigger>Product Information</AccordionTrigger>
+        <AccordionTrigger className='font-semibold'>Product Information</AccordionTrigger>
         <AccordionContent className="flex flex-col gap-4 text-balance">
-          <p>
-            Our flagship product combines cutting-edge technology with sleek
-            design. Built with premium materials, it offers unparalleled
-            performance and reliability.
-          </p>
-          <p>
-            Key features include advanced processing capabilities, and an
-            intuitive user interface designed for both beginners and experts.
-          </p>
+          {parse(productInfo.productInformation || '')}
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="item-2">
-        <AccordionTrigger>Shipping Details</AccordionTrigger>
+        <AccordionTrigger>Specification</AccordionTrigger>
         <AccordionContent className="flex flex-col gap-4 text-balance">
-          <p>
-            We offer worldwide shipping through trusted courier partners.
-            Standard delivery takes 3-5 business days, while express shipping
-            ensures delivery within 1-2 business days.
-          </p>
-          <p>
-            All orders are carefully packaged and fully insured. Track your
-            shipment in real-time through our dedicated tracking portal.
-          </p>
+          {
+            productInfo.specifications.map((spec, index) => (
+              <div key={index} className="flex justify-between border-b pb-2">
+                <span className="text-gray-600">{spec.key}</span>
+                <span className="font-medium">{spec.value}</span>
+              </div>
+            ))}
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="item-3">
+        <AccordionTrigger>Brand Information</AccordionTrigger>
+        <AccordionContent className="flex flex-col gap-4 text-balance">
+          {parse(productInfo.brandInformation || '')}
+        </AccordionContent>
+      </AccordionItem>
+
+            <AccordionItem value="item-4">
         <AccordionTrigger>Return Policy</AccordionTrigger>
         <AccordionContent className="flex flex-col gap-4 text-balance">
-          <p>
-            We stand behind our products with a comprehensive 30-day return
-            policy. If you&apos;re not completely satisfied, simply return the
-            item in its original condition.
-          </p>
-          <p>
-            Our hassle-free return process includes free return shipping and
-            full refunds processed within 48 hours of receiving the returned
-            item.
-          </p>
+          {parse(productInfo.returnPolicy || '')}
         </AccordionContent>
       </AccordionItem>
     </Accordion>)

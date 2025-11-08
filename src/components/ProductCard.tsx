@@ -29,8 +29,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     };
 
     return (
-        <Link 
-            href="/product/productDetails" 
+        <Link
+            href={`/product/productDetails?productId=${product._id}`}
             className="block"
             onClick={handleProductClick}
         >

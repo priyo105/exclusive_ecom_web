@@ -7,7 +7,7 @@ import Header from "../../../components/Header";
 import { useState, useEffect } from "react";
 import { imageUrls } from "../../../apis/endpoints";
 import Footer from "../../../components/Footer";
-import { getProductInfo } from "../../../apis/productinfo";
+import { getProductById, getProductInfo } from "../../../apis/product";
 import { ProductInfo } from "../../../types/ProductInfo";
 import ProductImages from "./components/ProductImages";
 import PriceDisplay from "./components/PriceDisplay";
@@ -15,12 +15,17 @@ import ColorSelector from "./components/ColorSelector";
 import SizeSelector from "./components/SizeSelector";
 import { Product } from "../../../types/Product";
 import ProductDetailsInfo from "./components/ProductDetailsInfo";
+import ProductReview from "./components/ProductReview";
+import { useSearchParams } from "next/navigation";
 
 type ProductImage = { url: string };
 type VariantCombination = { options?: string[]; images?: (string | ProductImage)[] };
 
 export default function ProductDetails() {
-  const product = useSelector((state: RootState) => state.product.selectedProduct) as Product | null;
+ // const product = useSelector((state: RootState) => state.product.selectedProduct) as Product | null;
+  // read productId query param if present
+
+
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,6 +33,24 @@ export default function ProductDetails() {
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [images, setImages] = useState<string[]>([]);
   const [productinfos, setProductInfos] = useState<ProductInfo | undefined>();
+  const [product,setProduct]=useState<Product|null>(null);
+
+  const searchParams = useSearchParams();
+  const productIdFromUrl = searchParams?.get?.("productId") ?? null;
+  if (productIdFromUrl) {
+    console.log("productId from URL:", productIdFromUrl);
+  }
+
+  useEffect(() => {
+    if (productIdFromUrl) {
+      getProductById(productIdFromUrl).then((data) => {
+        console.log("Fetched Product for id:", productIdFromUrl, data);
+        setProduct(data)
+      });
+    }
+  }, [productIdFromUrl]);
+
+
 
   // Normalize incoming image entries to plain non-empty strings.
   const normalizeImages = (arr: any[] | undefined): string[] => {
@@ -53,10 +76,13 @@ export default function ProductDetails() {
 
   //load product infos
   useEffect(() => {
-    getProductInfo(product?._id || "").then((data) => {
+    const idToFetch = product?._id || productIdFromUrl || "";
+    if (!idToFetch) return;
+    getProductInfo(idToFetch).then((data) => {
+      console.log("Fetched ProductInfo for id:", idToFetch, data);
       setProductInfos(data);
     });
-  }, [product]);
+  }, [product, productIdFromUrl]);
 
   if (!product) {
     return <p className="p-6 text-gray-500">No product selected</p>;
@@ -191,7 +217,14 @@ export default function ProductDetails() {
             </div>
           </div>
         </div>
-        <ProductDetailsInfo />
+        <div>
+          <ProductDetailsInfo productInfo={productinfos} />
+
+        </div>
+        <div className="mt-10 lg:ml-20">
+          <h2 className="text-3xl font-bold mb-6">Customer Reviews</h2>
+          <ProductReview productId={product._id} />
+        </div>
       </div>
 
       {/* Mobile fixed Add to Cart bar */}

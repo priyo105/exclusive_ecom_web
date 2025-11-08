@@ -17,6 +17,7 @@ export const GET_PRODUCT_REVIEWS=BASE_URL+"productReview/products/reviews"
 export const GET_PRODUCT_BY_CATEGORY=BASE_URL+"category/products"
 export const GET_PRODUCTS_BY_VENDORID=BASE_URL+"product/products/vendor"
 export const GET_SIMILAR_PRODUCT_URL=BASE_URL+"product/similar"
+export const GET_PRODUCT_BY_ID=BASE_URL+"product/products"
 //product List
 
 export const GET_PRODUCTS_BY_SECTION_ID=BASE_URL+"home/getProductsBySectionId"

@@ -1,6 +1,6 @@
 import { User } from "./User"
 
-export interface ProductReview {
+export interface ProductReviewType {
   _id: string
   product: string
   user: User
