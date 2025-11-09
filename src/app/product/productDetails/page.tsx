@@ -17,12 +17,13 @@ import { Product } from "../../../types/Product";
 import ProductDetailsInfo from "./components/ProductDetailsInfo";
 import ProductReview from "./components/ProductReview";
 import { useSearchParams } from "next/navigation";
+import SimilarProducts from "./components/SimilarProducts";
 
 type ProductImage = { url: string };
 type VariantCombination = { options?: string[]; images?: (string | ProductImage)[] };
 
 export default function ProductDetails() {
- // const product = useSelector((state: RootState) => state.product.selectedProduct) as Product | null;
+  // const product = useSelector((state: RootState) => state.product.selectedProduct) as Product | null;
   // read productId query param if present
 
 
@@ -33,7 +34,7 @@ export default function ProductDetails() {
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [images, setImages] = useState<string[]>([]);
   const [productinfos, setProductInfos] = useState<ProductInfo | undefined>();
-  const [product,setProduct]=useState<Product|null>(null);
+  const [product, setProduct] = useState<Product | null>(null);
 
   const searchParams = useSearchParams();
   const productIdFromUrl = searchParams?.get?.("productId") ?? null;
@@ -225,6 +226,9 @@ export default function ProductDetails() {
           <h2 className="text-3xl font-bold mb-6">Customer Reviews</h2>
           <ProductReview productId={product._id} />
         </div>
+      </div>
+      <div className="max-w-7xl mx-auto px-6 py-10">
+        <SimilarProducts productId={product._id} />
       </div>
 
       {/* Mobile fixed Add to Cart bar */}
